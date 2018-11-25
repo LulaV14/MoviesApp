@@ -47,4 +47,60 @@ public class Movie {
 
     @SerializedName("adult")
     private Boolean adult;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public Boolean getVideo() {
+        return video;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public Integer getVoteCount() {
+        return voteCount;
+    }
+
+    public String getOriginalLanguage() {
+        return originalLanguage;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public List<Integer> getGenreIds() {
+        return genreIds;
+    }
+
+    public Boolean getAdult() {
+        return adult;
+    }
 }

@@ -15,9 +15,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
+        debug {
+            buildConfigField('String', 'TMDB_ApiKey', TMDB_ApiKey)
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'TMDB_ApiKey', TMDB_ApiKey)
         }
     }
 }
