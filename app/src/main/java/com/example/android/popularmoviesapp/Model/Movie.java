@@ -103,4 +103,9 @@ public class Movie {
     public Boolean getAdult() {
         return adult;
     }
+
+    // get correct image url
+    public String getPosterImageUrl() {
+        return "http://image.tmdb.org/t/p/w185" + getPosterPath();
+    }
 }
