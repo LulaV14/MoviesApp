@@ -1,6 +1,7 @@
 package com.example.android.popularmoviesapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieOnClickHandler {
 
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static String TMDB_API_KEY = BuildConfig.TMDB_ApiKey;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         movies = response.body().getResults();
-                        movieAdapter = new MovieAdapter(movies);
+                        movieAdapter = new MovieAdapter(movies, MainActivity.this::onClick);
                         recyclerView.setAdapter(movieAdapter);
                     } catch (NullPointerException e) {
                         Log.e(TAG, e.getMessage());
@@ -80,5 +81,13 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         return (int) (dpWidth / 95);
+    }
+
+    @Override
+    public void onClick(int movie_position) {
+        Movie clickedMovie = movies.get(movie_position);
+        Intent detailIntent = new Intent(this, MovieDetailActivity.class);
+        detailIntent.putExtra("MOVIE_OBJECT", clickedMovie);
+        startActivity(detailIntent);
     }
 }

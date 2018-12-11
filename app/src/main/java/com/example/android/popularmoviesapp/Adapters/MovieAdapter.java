@@ -3,11 +3,11 @@ package com.example.android.popularmoviesapp.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.view.View.OnClickListener;
 
 import com.example.android.popularmoviesapp.Model.Movie;
 import com.example.android.popularmoviesapp.R;
@@ -20,10 +20,16 @@ import butterknife.ButterKnife;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private static final String TAG = MovieAdapter.class.getSimpleName();
+    private final MovieOnClickHandler movieOnClickHandler;
     private List<Movie> movies;
 
-    public MovieAdapter(List<Movie> movies) {
+    public MovieAdapter(List<Movie> movies, MovieOnClickHandler clickHandler) {
         this.movies = movies;
+        this.movieOnClickHandler = clickHandler;
+    }
+
+    public interface MovieOnClickHandler {
+        void onClick(int movie_position);
     }
 
     @NonNull
@@ -50,14 +56,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return movies.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         @BindView(R.id.iv_movie_poster)
         ImageView moviePoster;
 
         private ViewHolder(View itemView) {
             super(itemView);
-//            moviePoster = itemView.findViewById(R.id.iv_movie_poster);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            movieOnClickHandler.onClick(getAdapterPosition());
         }
     }
 }

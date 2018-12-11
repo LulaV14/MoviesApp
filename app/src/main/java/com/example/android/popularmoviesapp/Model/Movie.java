@@ -2,10 +2,11 @@ package com.example.android.popularmoviesapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Movie {
+public class Movie implements Serializable {
     @SerializedName("id")
     private Integer id;
 
