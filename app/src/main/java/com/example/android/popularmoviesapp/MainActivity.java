@@ -8,6 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.android.popularmoviesapp.API.TMDBController;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static String TMDB_API_KEY = BuildConfig.TMDB_ApiKey;
+    private final static String POPULAR_MOVIES = "popular";
+    private final static String TOP_RATED_MOVIES = "top_rated";
 
     private MovieAdapter movieAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -44,9 +48,29 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         int columns = calculateNoOfColumns(this);
         mLayoutManager = new GridLayoutManager(this, columns);
         recyclerView.setLayoutManager(mLayoutManager);
+        showMovies(POPULAR_MOVIES);
+    }
 
+    public int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        return (int) (dpWidth / 95);
+    }
+
+    public void showMovies(String type) {
         TMDBInterface TMDB_service = TMDBController.getClient().create(TMDBInterface.class);
-        Call<MoviesResponse> call = TMDB_service.getPopularMovies(TMDB_API_KEY);
+        Call<MoviesResponse> call;
+        switch(type) {
+            case POPULAR_MOVIES:
+                call = TMDB_service.getPopularMovies(TMDB_API_KEY);
+                break;
+            case TOP_RATED_MOVIES:
+                call = TMDB_service.getTopRatedMovies(TMDB_API_KEY);
+                break;
+            default:
+                call = TMDB_service.getPopularMovies(TMDB_API_KEY);
+                break;
+        }
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
@@ -60,15 +84,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                     }
                 } else {
                     Log.e(TAG, response.errorBody().toString());
+                    Log.e(TAG, response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<MoviesResponse> call, Throwable t) {
                 Toast.makeText(
-                    MainActivity.this,
-                    "There was an error when loading movies. Please try again.",
-                    Toast.LENGTH_LONG
+                        MainActivity.this,
+                        "There was an error when loading movies. Please try again.",
+                        Toast.LENGTH_LONG
                 ).show();
 
                 Log.e(TAG, "Error while trying to load movies");
@@ -77,17 +102,33 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         });
     }
 
-    public int calculateNoOfColumns(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        return (int) (dpWidth / 95);
-    }
-
     @Override
     public void onClick(int movie_position) {
         Movie clickedMovie = movies.get(movie_position);
         Intent detailIntent = new Intent(this, MovieDetailActivity.class);
         detailIntent.putExtra("MOVIE_OBJECT", clickedMovie);
         startActivity(detailIntent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.filter_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.most_popular_filter:
+                showMovies(POPULAR_MOVIES);
+                break;
+            case R.id.top_rated_filter:
+                showMovies(TOP_RATED_MOVIES);
+                break;
+            default:
+                showMovies(POPULAR_MOVIES);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -12,6 +12,9 @@ public interface TMDBInterface {
     @GET("movie/popular")
     Call<MoviesResponse> getPopularMovies(@Query("api_key") String apiKey);
 
+    @GET("movie/top_rated")
+    Call<MoviesResponse> getTopRatedMovies(@Query("api_key") String apiKey);
+
     @GET("movie/{id}")
     Call<MoviesResponse> getMovieDetails(@Path("id") int id, @Query("api_key") String apiKey);
 }
