@@ -1,10 +1,15 @@
 package com.example.android.popularmoviesapp.Model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Movie implements Serializable {
     @SerializedName("id")
@@ -62,7 +67,15 @@ public class Movie implements Serializable {
     }
 
     public String getReleaseDate() {
-        return releaseDate;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd", Locale.US);
+            Date parsedReleaseDate = formatter.parse(releaseDate);
+            formatter = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
+            return formatter.format(parsedReleaseDate);
+        } catch (Exception e) {
+            Log.e("Movie model", e.getMessage());
+            return "";
+        }
     }
 
     public String getPosterPath() {
@@ -109,4 +122,6 @@ public class Movie implements Serializable {
     public String getPosterImageUrl() {
         return "http://image.tmdb.org/t/p/w185" + getPosterPath();
     }
+
+    public String getBackdropImageUrl() { return "http://image.tmdb.org/t/p/w780" + getBackdropPath(); }
 }
