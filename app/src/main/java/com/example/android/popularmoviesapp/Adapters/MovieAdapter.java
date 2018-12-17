@@ -46,6 +46,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         Movie movie = movies.get(i);
         Picasso.get()
                 .load(movie.getPosterImageUrl())
+                .placeholder(R.drawable.poster_image_loading)
+                .error(R.drawable.poster_image_error)
                 .resize(185, 275)
                 .centerCrop()
                 .into(viewHolder.moviePoster);

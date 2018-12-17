@@ -21,13 +21,13 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:scaleType="centerCrop"
-                android:contentDescription="MovieBackdropImage" />
+                android:contentDescription="@string/movie_backdrop_description" />
 
             <TextView
                 android:id="@+id/tv_movie_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Movie Title"
+                android:text="@string/example_movie_title"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_margin="5dp"
@@ -49,16 +49,16 @@
                 android:layout_margin="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="Release Date:" />
+                android:text="@string/detail_release_date" />
 
             <TextView
                 android:id="@+id/tv_release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tv_release_date_label"
+                android:layout_toEndOf="@id/tv_release_date_label"
                 android:layout_margin="10dp"
                 android:textSize="18sp"
-                android:text="Sept. 9 2017"/>
+                android:text="@string/example_release_date"/>
 
             <TextView
                 android:id="@+id/tv_vote_average_label"
@@ -68,7 +68,7 @@
                 android:layout_margin="10dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="Average Vote:" />
+                android:text="@string/detail_average_vote" />
 
             <RatingBar
                 android:id="@+id/rb_vote_average"
@@ -84,17 +84,17 @@
                 android:stepSize="0.5"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/tv_release_date"
-                android:layout_toRightOf="@id/tv_vote_average_label"/>
+                android:layout_toEndOf="@id/tv_vote_average_label"/>
 
             <TextView
                 android:id="@+id/tv_vote_average"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_release_date"
-                android:layout_toRightOf="@id/rb_vote_average"
+                android:layout_toEndOf="@id/rb_vote_average"
                 android:layout_margin="10dp"
                 android:textSize="18sp"
-                android:text="8.9"
+                android:text="@string/example_vote_average"
                 android:visibility="visible"/>
 
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_marginBottom="5dp"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:text="Overview:"/>
+                android:text="@string/detail_overview"/>
 
             <TextView
                 android:id="@+id/tv_movie_overview"
@@ -122,7 +122,7 @@
                 android:textSize="18sp"
                 android:lines="15"
                 android:maxLines="15"
-                android:text="Overview / Synpossis of the movie..."/>
+                android:text="@string/example_overview"/>
 
         </RelativeLayout>
 

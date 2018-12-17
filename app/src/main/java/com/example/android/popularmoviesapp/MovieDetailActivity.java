@@ -59,8 +59,10 @@ public class MovieDetailActivity extends AppCompatActivity {
             try {
                 Picasso.get()
                         .load(movie.getBackdropImageUrl())
-                        .resize(780, 439)
-                        .centerCrop()
+                        .placeholder(R.drawable.backdrop_image_loading)
+                        .error(R.drawable.backdrop_image_error)
+                        .fit()
+                        .centerInside()
                         .transform(new GradientTransformation())
                         .into(iv_backdrop_image);
             } catch(NullPointerException e) {
