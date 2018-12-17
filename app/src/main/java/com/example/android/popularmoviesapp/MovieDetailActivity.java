@@ -65,15 +65,15 @@ public class MovieDetailActivity extends AppCompatActivity {
                         .centerInside()
                         .transform(new GradientTransformation())
                         .into(iv_backdrop_image);
+                tv_title.setText(movie.getTitle());
+                tv_overview.setText(movie.getOverview());
+                Double vote_average = movie.getVoteAverage() / 2;
+                tv_vote_average.setText("(" + movie.getVoteAverage() + ")");
+                rb_vote_average.setRating(vote_average.floatValue());
+                tv_release_date.setText(movie.getReleaseDate());
             } catch(NullPointerException e) {
                 Log.e(TAG, e.getMessage());
             }
-            tv_title.setText(movie.getTitle());
-            tv_overview.setText(movie.getOverview());
-            Double vote_average = movie.getVoteAverage() / 2;
-            tv_vote_average.setText("(" + movie.getVoteAverage() + ")");
-            rb_vote_average.setRating(vote_average.floatValue());
-            tv_release_date.setText(movie.getReleaseDate());
         } else {
             closeOnError();
             Log.e(TAG, "No intent extra data found");

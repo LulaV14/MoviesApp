@@ -63,12 +63,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         switch(type) {
             case POPULAR_MOVIES:
                 call = TMDB_service.getPopularMovies(TMDB_API_KEY);
+                getSupportActionBar().setTitle(R.string.filter_most_popular);
                 break;
             case TOP_RATED_MOVIES:
                 call = TMDB_service.getTopRatedMovies(TMDB_API_KEY);
+                getSupportActionBar().setTitle(R.string.filter_top_rated);
                 break;
             default:
                 call = TMDB_service.getPopularMovies(TMDB_API_KEY);
+                getSupportActionBar().setTitle(R.string.filter_most_popular);
                 break;
         }
         call.enqueue(new Callback<MoviesResponse>() {

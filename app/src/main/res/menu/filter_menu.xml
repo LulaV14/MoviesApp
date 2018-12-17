@@ -6,12 +6,12 @@
         android:id="@+id/most_popular_filter"
         android:orderInCategory="1"
         app:showAsAction="never"
-        android:title="Filter By Most Popular" />
+        android:title="@string/most_popular_title" />
 
     <item
         android:id="@+id/top_rated_filter"
         android:orderInCategory="2"
         app:showAsAction="never"
-        android:title="Filter By Top Rated" />
+        android:title="@string/top_rated_title" />
 
 </menu>
