@@ -10,8 +10,9 @@
         android:id="@+id/rv_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/rv_movies_margin"
+        android:layout_marginRight="@dimen/rv_movies_margin"
+        android:layout_marginTop="@dimen/rv_movies_margin"/>
 
 </FrameLayout>

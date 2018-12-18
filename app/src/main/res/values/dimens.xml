@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- activity_main.xml -->
+    <dimen name="rv_movies_margin">10dp</dimen>
+
+    <!-- activity_movie_detail.xml -->
+    <dimen name="movie_title_text_size">20sp</dimen>
+    <dimen name="movie_title_margin">5dp</dimen>
+
+    <dimen name="movie_properties_text_size">18sp</dimen>
+    <dimen name="movie_properties_margin">10dp</dimen>
+
+    <dimen name="movie_details_container_margin">5dp</dimen>
+
+    <dimen name="rb_vote_avg_custom_scale">1.6</dimen>
+    <dimen name="rb_vote_avg_custom_transform">0dp</dimen>
+    <dimen name="rb_vote_adjusted_margin">60dp</dimen>
+    <dimen name="rb_movie_vote_step_size">0.5</dimen>
+    <dimen name="rb_vote_average_margin_top">10dp</dimen>
+
+    <dimen name="tv_vote_avg_margin">10dp</dimen>
+
+    <dimen name="overview_label_margin_bottom">5dp</dimen>
+    <dimen name="overview_margin_top">5dp</dimen>
+
+    <!-- rv_image_item.xml -->
+    <dimen name="rv_item_margin">5dp</dimen>
+
+    <dimen name="cv_item_elevation">12dp</dimen>
+    <dimen name="cv_item_corner_radius">6dp</dimen>
+    <dimen name="cv_item_card_elevation">4dp</dimen>
+    <dimen name="cv_item_card_max_elevation">6dp</dimen>
+</resources>
