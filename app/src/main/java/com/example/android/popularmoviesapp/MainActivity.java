@@ -2,6 +2,7 @@ package com.example.android.popularmoviesapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,7 +19,7 @@ import com.example.android.popularmoviesapp.Adapters.MovieAdapter;
 import com.example.android.popularmoviesapp.Model.Movie;
 import com.example.android.popularmoviesapp.Model.MoviesResponse;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,10 +33,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private final static String TMDB_API_KEY = BuildConfig.TMDB_ApiKey;
     private final static String POPULAR_MOVIES = "popular";
     private final static String TOP_RATED_MOVIES = "top_rated";
+    private final static String SELECTED_FILTER_PREFERENCE = "SELECTED_FILTER_PREFERENCE";
 
     private MovieAdapter movieAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Movie> movies;
+    private ArrayList<Movie> movies;
+
     @BindView(R.id.rv_movies)
     RecyclerView recyclerView;
 
@@ -48,7 +51,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         int columns = calculateNoOfColumns(this);
         mLayoutManager = new GridLayoutManager(this, columns);
         recyclerView.setLayoutManager(mLayoutManager);
-        showMovies(POPULAR_MOVIES);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("movies_list")) {
+                movies = savedInstanceState.getParcelableArrayList("movies_list");
+                movieAdapter = new MovieAdapter(movies, MainActivity.this::onClick);
+                recyclerView.setAdapter(movieAdapter);
+        } else {
+            String selectedFilter = getFilterPreferences();
+            showMovies(selectedFilter);
+        }
     }
 
     public int calculateNoOfColumns(Context context) {
@@ -124,14 +135,34 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         switch(item.getItemId()) {
             case R.id.most_popular_filter:
                 showMovies(POPULAR_MOVIES);
+                setFilterPreferences(POPULAR_MOVIES);
                 break;
             case R.id.top_rated_filter:
                 showMovies(TOP_RATED_MOVIES);
+                setFilterPreferences(TOP_RATED_MOVIES);
                 break;
             default:
                 showMovies(POPULAR_MOVIES);
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("movies_list", movies);
+        super.onSaveInstanceState(outState);
+    }
+
+    private void setFilterPreferences(String selected_filter) {
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SELECTED_FILTER_PREFERENCE, selected_filter);
+        editor.apply();
+    }
+
+    private String getFilterPreferences() {
+        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+        return sharedPreferences.getString(SELECTED_FILTER_PREFERENCE, POPULAR_MOVIES);
     }
 }

@@ -51,7 +51,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         // get intent data
         Intent intent = getIntent();
         if (intent.hasExtra("MOVIE_OBJECT")) {
-            Movie movie = (Movie) intent.getSerializableExtra("MOVIE_OBJECT");
+            Movie movie = intent.getParcelableExtra("MOVIE_OBJECT");
             if (movie == null) {
                 closeOnError();
                 Log.e(TAG, "No movie object serialized");

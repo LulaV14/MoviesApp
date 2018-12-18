@@ -13,7 +13,7 @@ import com.example.android.popularmoviesapp.Model.Movie;
 import com.example.android.popularmoviesapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private static final String TAG = MovieAdapter.class.getSimpleName();
     private final MovieOnClickHandler movieOnClickHandler;
-    private List<Movie> movies;
+    private ArrayList<Movie> movies;
 
-    public MovieAdapter(List<Movie> movies, MovieOnClickHandler clickHandler) {
+    public MovieAdapter(ArrayList<Movie> movies, MovieOnClickHandler clickHandler) {
         this.movies = movies;
         this.movieOnClickHandler = clickHandler;
     }
