@@ -2,11 +2,11 @@ package com.example.android.popularmoviesapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MoviesResponse {
     @SerializedName("results")
-    private List<Movie> results;
+    private ArrayList<Movie> results;
 
     @SerializedName("page")
     private int page;
@@ -17,7 +17,7 @@ public class MoviesResponse {
     @SerializedName("total_pages")
     private int totalPages;
 
-    public List<Movie> getResults() {
+    public ArrayList<Movie> getResults() {
         return results;
     }
 

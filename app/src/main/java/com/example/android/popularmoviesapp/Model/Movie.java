@@ -1,17 +1,17 @@
 package com.example.android.popularmoviesapp.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Movie implements Serializable {
+public class Movie implements Parcelable {
     @SerializedName("id")
     private Integer id;
 
@@ -124,4 +124,55 @@ public class Movie implements Serializable {
     }
 
     public String getBackdropImageUrl() { return "http://image.tmdb.org/t/p/w780" + getBackdropPath(); }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(this.id);
+        parcel.writeString(this.title);
+        parcel.writeString(this.overview);
+        parcel.writeString(this.releaseDate);
+        parcel.writeString(this.posterPath);
+        parcel.writeString(this.backdropPath);
+        parcel.writeDouble(this.popularity);
+        parcel.writeInt(this.video ? 1 : 0);
+        parcel.writeDouble(this.voteAverage);
+        parcel.writeInt(this.voteCount);
+        parcel.writeString(this.originalLanguage);
+        parcel.writeString(this.originalTitle);
+        parcel.writeList(this.genreIds);
+        parcel.writeInt(this.adult ? 1 : 0);
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie> () {
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    private Movie(Parcel in) {
+        this.id = in.readInt();
+        this.title = in.readString();
+        this.overview = in.readString();
+        this.releaseDate = in.readString();
+        this.posterPath = in.readString();
+        this.backdropPath = in.readString();
+        this.popularity = in.readDouble();
+        this.video = in.readInt() != 0;
+        this.voteAverage = in.readDouble();
+        this.voteCount = in.readInt();
+        this.originalLanguage = in.readString();
+        this.originalTitle = in.readString();
+        this.genreIds = new ArrayList<>();
+        in.readList(this.genreIds, Integer.class.getClassLoader());
+        this.adult = in.readInt() != 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }
