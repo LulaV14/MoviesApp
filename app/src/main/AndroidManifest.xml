@@ -4,17 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- TODO: Fix Network Security for API 28 and up
-        If you test your app on the api 28, you will get a blank screen because of Network Security
-
-        Take a look these links for more details:
-        https://developer.android.com/about/versions/pie/android-9.0-changes-28
-        https://developer.android.com/training/articles/security-config
-        https://stackoverflow.com/questions/51990158/android-p-networksecuritypolicy-iscleartexttrafficpermitted-false-when-network
-
-        Ps: Don't forget this attribute cleartextTrafficPermitted=true for next stage :)
-    -->
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
