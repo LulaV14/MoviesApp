@@ -26,6 +26,9 @@
     <!-- rv_image_item.xml -->
     <dimen name="rv_item_margin">5dp</dimen>
 
+    <!-- rv_video_row.xml -->
+    <dimen name="rv_video_margin">5dp</dimen>
+
     <dimen name="cv_item_elevation">12dp</dimen>
     <dimen name="cv_item_corner_radius">6dp</dimen>
     <dimen name="cv_item_card_elevation">4dp</dimen>

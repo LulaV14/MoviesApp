@@ -49,7 +49,7 @@ public class Movie implements Parcelable {
     private String originalTitle;
 
     @SerializedName("genre_ids")
-    private List<Integer> genreIds = new ArrayList<>();
+    private List<Integer> genreIds;
 
     @SerializedName("adult")
     private Boolean adult;
@@ -174,5 +174,9 @@ public class Movie implements Parcelable {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public boolean isValid() {
+        return this.id != null && this.title != null;
     }
 }

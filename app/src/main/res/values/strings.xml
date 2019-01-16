@@ -13,8 +13,13 @@
     <string name="detail_average_vote">Average Vote:</string>
     <string name="detail_overview">Overview:</string>
 
+    <string name="detail_trailers">Trailers</string>
+
+    <!-- Examples -->
     <string name="example_movie_title">Movie Title Example</string>
     <string name="example_release_date">Sept. 9 2017</string>
     <string name="example_vote_average">(8.9)</string>
     <string name="example_overview">Overview / Synopsis of the movie&#8230;</string>
+
+    <string name="example_video_name">Example Trailer 1</string>
 </resources>

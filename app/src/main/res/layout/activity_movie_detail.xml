@@ -37,6 +37,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_movie_details_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/movie_details_container_margin">
@@ -80,7 +81,7 @@
                 android:transformPivotX="@dimen/rb_vote_avg_custom_transform"
                 android:transformPivotY="@dimen/rb_vote_avg_custom_transform"
                 android:layout_marginEnd="@dimen/rb_vote_adjusted_margin"
-                android:isIndicator="false"
+                android:isIndicator="true"
                 android:stepSize="@dimen/rb_movie_vote_step_size"
                 android:layout_marginTop="@dimen/rb_vote_average_margin_top"
                 android:layout_below="@id/tv_release_date"
@@ -120,9 +121,35 @@
                 android:layout_marginEnd="@dimen/movie_properties_margin"
                 android:layout_marginBottom="@dimen/movie_properties_margin"
                 android:textSize="@dimen/movie_properties_text_size"
-                android:lines="15"
                 android:maxLines="15"
                 android:text="@string/example_overview"/>
+
+            <LinearLayout
+                android:id="@+id/ll_movie_trailers_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/tv_movie_overview">
+
+                <TextView
+                    android:id="@+id/tv_trailers_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/movie_properties_margin"
+                    android:layout_marginStart="@dimen/movie_properties_margin"
+                    android:layout_marginEnd="@dimen/movie_properties_margin"
+                    android:layout_marginBottom="@dimen/overview_label_margin_bottom"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/movie_properties_text_size"
+                    android:text="@string/detail_trailers"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_videos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/movie_properties_margin"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
