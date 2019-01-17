@@ -151,6 +151,33 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_movie_reviews_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@id/ll_movie_trailers_container">
+
+                <TextView
+                    android:id="@+id/tv_reviews_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/movie_properties_margin"
+                    android:layout_marginStart="@dimen/movie_properties_margin"
+                    android:layout_marginEnd="@dimen/movie_properties_margin"
+                    android:layout_marginBottom="@dimen/overview_label_margin_bottom"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/movie_properties_text_size"
+                    android:text="@string/detail_reviews"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/movie_properties_margin"/>
+
+            </LinearLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

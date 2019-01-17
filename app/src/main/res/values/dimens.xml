@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- activity_main.xml -->
+    <!-- start activity_main.xml -->
     <dimen name="rv_movies_margin">10dp</dimen>
+    <!-- end activity_main.xml -->
 
-    <!-- activity_movie_detail.xml -->
+
+    <!-- start activity_movie_detail.xml -->
     <dimen name="movie_title_text_size">20sp</dimen>
     <dimen name="movie_title_margin">5dp</dimen>
 
@@ -22,15 +24,40 @@
 
     <dimen name="overview_label_margin_bottom">5dp</dimen>
     <dimen name="overview_margin_top">5dp</dimen>
+    <!-- end activity_movie_detail.xml -->
 
-    <!-- rv_image_item.xml -->
+
+    <!-- start rv_image_item.xml -->
     <dimen name="rv_item_margin">5dp</dimen>
-
-    <!-- rv_video_row.xml -->
-    <dimen name="rv_video_margin">5dp</dimen>
 
     <dimen name="cv_item_elevation">12dp</dimen>
     <dimen name="cv_item_corner_radius">6dp</dimen>
     <dimen name="cv_item_card_elevation">4dp</dimen>
     <dimen name="cv_item_card_max_elevation">6dp</dimen>
+    <!-- end rv_image_item.xml -->
+
+
+    <!-- start rv_video_row.xml -->
+    <dimen name="rv_video_margin">5dp</dimen>
+    <!-- end rv_video_row.xml -->
+
+
+    <!-- start review_card.xml -->
+    <dimen name="review_author_text_size">16sp</dimen>
+    <dimen name="review_content_text_size">18sp</dimen>
+    <dimen name="tv_review_read_more_text_size">16sp</dimen>
+
+    <dimen name="cv_review_padding">10dp</dimen>
+    <dimen name="cv_review_margin">5dp</dimen>
+    <dimen name="cv_review_corner_radius">0dp</dimen>
+    <dimen name="cv_review_elevation">3dp</dimen>
+
+    <dimen name="tv_review_author_margin_short">5dp</dimen>
+    <dimen name="tv_review_content_margin_short">5dp</dimen>
+    <dimen name="tv_review_read_more_margin_short">5dp</dimen>
+    <dimen name="tv_review_author_margin_long">10dp</dimen>
+    <dimen name="tv_review_content_margin_long">10dp</dimen>
+    <dimen name="tv_review_read_more_margin_long">10dp</dimen>
+    <!-- end review_card.xml -->
+
 </resources>

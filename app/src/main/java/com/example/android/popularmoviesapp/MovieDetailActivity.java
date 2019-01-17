@@ -5,9 +5,12 @@ import android.content.Intent;
 
 import com.example.android.popularmoviesapp.API.TMDBController;
 import com.example.android.popularmoviesapp.API.TMDBInterface;
+import com.example.android.popularmoviesapp.Adapters.ReviewAdapter;
 import com.example.android.popularmoviesapp.Adapters.VideoAdapter;
 import com.example.android.popularmoviesapp.Helpers.GradientTransformation;
 import com.example.android.popularmoviesapp.Model.Movie;
+import com.example.android.popularmoviesapp.Model.Review;
+import com.example.android.popularmoviesapp.Model.ReviewsResponse;
 import com.example.android.popularmoviesapp.Model.Video;
 import com.example.android.popularmoviesapp.Model.VideosResponse;
 import com.squareup.picasso.Picasso;
@@ -41,6 +44,8 @@ public class MovieDetailActivity extends AppCompatActivity
 
     private ArrayList<Video> videos;
     private VideoAdapter videoAdapter;
+    private ArrayList<Review> reviews;
+    private ReviewAdapter reviewAdapter;
     private int movieId;
 
     @BindView(R.id.iv_backdrop_image)
@@ -57,6 +62,8 @@ public class MovieDetailActivity extends AppCompatActivity
     TextView tv_release_date;
     @BindView(R.id.rv_videos)
     RecyclerView rv_videos;
+    @BindView(R.id.rv_reviews)
+    RecyclerView rv_reviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +130,18 @@ public class MovieDetailActivity extends AppCompatActivity
         } else {
             showVideos(movieId);
         }
+
+        // show reviews
+        RecyclerView.LayoutManager reviewsLayoutManager = new LinearLayoutManager(this);
+        rv_reviews.setLayoutManager(reviewsLayoutManager);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("reviews_list")) {
+            reviews = savedInstanceState.getParcelableArrayList("reviews_list");
+            reviewAdapter= new ReviewAdapter(reviews);
+            rv_reviews.setAdapter(reviewAdapter);
+        } else {
+            showReviews(movieId);
+        }
     }
 
     private void closeOnError() {
@@ -139,6 +158,7 @@ public class MovieDetailActivity extends AppCompatActivity
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("videos_list", videos);
+        outState.putParcelableArrayList("reviews_list", reviews);
         super.onSaveInstanceState(outState);
     }
 
@@ -171,6 +191,40 @@ public class MovieDetailActivity extends AppCompatActivity
                 ).show();
 
                 Log.e(TAG, "Error while trying to load movie videos");
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void showReviews(int movie_id) {
+        TMDBInterface TMDB_service = TMDBController.getClient().create(TMDBInterface.class);
+        Call<ReviewsResponse> call = TMDB_service.getMovieReviews(movie_id, TMDB_API_KEY);
+        call.enqueue(new Callback<ReviewsResponse>() {
+            @Override
+            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        reviews = response.body().getResults();
+                        reviewAdapter = new ReviewAdapter(reviews);
+                        rv_reviews.setAdapter(reviewAdapter);
+                    } catch (NullPointerException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                } else {
+                    Log.e(TAG, response.errorBody().toString());
+                    Log.e(TAG, response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+                Toast.makeText(
+                        MovieDetailActivity.this,
+                        "Error while loading movie reviews.\nPlease try again",
+                        Toast.LENGTH_LONG
+                ).show();
+
+                Log.e(TAG, "Error while trying to load moview reviews");
                 t.printStackTrace();
             }
         });
