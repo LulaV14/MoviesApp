@@ -1,20 +1,42 @@
 <resources>
+    <!-- start MainActivity -->
     <string name="app_name">Popular Movies App</string>
     <string name="filter_most_popular">Most Popular Movies</string>
     <string name="filter_top_rated">Top Rated Movies</string>
+    <string name="filter_favorites">Favorite Movies</string>
 
     <string name="movie_poster_description">Movie Poster</string>
-    <string name="movie_backdrop_description">Movie Backdrop</string>
+    <!-- end MainActivity -->
 
+
+    <!-- start filter_menu -->
     <string name="most_popular_title">Filter By Most Popular</string>
     <string name="top_rated_title">Filter By Top Rated</string>
+    <string name="favorite_filter_title">Filter By Favorite</string>
+    <!-- end filter_menu -->
 
+
+    <!-- start MovieDetailActivity -->
+    <string name="movie_backdrop_description">Movie Backdrop</string>
+    <string name="movie_favorite_description">Movie Favorite</string>
     <string name="detail_release_date">Release Date:</string>
     <string name="detail_average_vote">Average Vote:</string>
     <string name="detail_overview">Overview:</string>
 
+    <string name="detail_trailers">Trailers</string>
+    <string name="detail_reviews">Reviews</string>
+    <string name="detail_review_read_more">(Read More)</string>
+    <!-- end MovieDetailActivity -->
+
+    <!-- start Examples for debugging -->
     <string name="example_movie_title">Movie Title Example</string>
     <string name="example_release_date">Sept. 9 2017</string>
     <string name="example_vote_average">(8.9)</string>
     <string name="example_overview">Overview / Synopsis of the movie&#8230;</string>
+
+    <string name="example_video_name">Example Trailer 1</string>
+
+    <string name="example_review_author">Lula Villalobos</string>
+    <string name="example_review_content">Arthur Curry (Jason Momoa) lives with his father on the Maine Coast, a caretaker of a lighthouse. With the mentorship of Vulko (Willem Dafoe) and the revelations of Mera (Amber Heard) he discovers that he is the half-breed heir to the underwater kingdom of Atlantis. </string>
+    <!-- end Examples for debugging -->
 </resources>

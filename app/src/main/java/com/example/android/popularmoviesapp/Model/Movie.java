@@ -30,29 +30,8 @@ public class Movie implements Parcelable {
     @SerializedName("backdrop_path")
     private String backdropPath;
 
-    @SerializedName("popularity")
-    private Double popularity;
-
-    @SerializedName("video")
-    private Boolean video;
-
     @SerializedName("vote_average")
     private Double voteAverage;
-
-    @SerializedName("vote_count")
-    private Integer voteCount;
-
-    @SerializedName("original_language")
-    private String originalLanguage;
-
-    @SerializedName("original_title")
-    private String originalTitle;
-
-    @SerializedName("genre_ids")
-    private List<Integer> genreIds = new ArrayList<>();
-
-    @SerializedName("adult")
-    private Boolean adult;
 
     public Integer getId() {
         return id;
@@ -86,36 +65,8 @@ public class Movie implements Parcelable {
         return backdropPath;
     }
 
-    public Double getPopularity() {
-        return popularity;
-    }
-
-    public Boolean getVideo() {
-        return video;
-    }
-
     public Double getVoteAverage() {
         return voteAverage;
-    }
-
-    public Integer getVoteCount() {
-        return voteCount;
-    }
-
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
-
-    public List<Integer> getGenreIds() {
-        return genreIds;
-    }
-
-    public Boolean getAdult() {
-        return adult;
     }
 
     // get correct image url
@@ -133,14 +84,7 @@ public class Movie implements Parcelable {
         parcel.writeString(this.releaseDate);
         parcel.writeString(this.posterPath);
         parcel.writeString(this.backdropPath);
-        parcel.writeDouble(this.popularity);
-        parcel.writeInt(this.video ? 1 : 0);
         parcel.writeDouble(this.voteAverage);
-        parcel.writeInt(this.voteCount);
-        parcel.writeString(this.originalLanguage);
-        parcel.writeString(this.originalTitle);
-        parcel.writeList(this.genreIds);
-        parcel.writeInt(this.adult ? 1 : 0);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie> () {
@@ -160,19 +104,26 @@ public class Movie implements Parcelable {
         this.releaseDate = in.readString();
         this.posterPath = in.readString();
         this.backdropPath = in.readString();
-        this.popularity = in.readDouble();
-        this.video = in.readInt() != 0;
         this.voteAverage = in.readDouble();
-        this.voteCount = in.readInt();
-        this.originalLanguage = in.readString();
-        this.originalTitle = in.readString();
-        this.genreIds = new ArrayList<>();
-        in.readList(this.genreIds, Integer.class.getClassLoader());
-        this.adult = in.readInt() != 0;
     }
 
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    public boolean isValid() {
+        return this.id != null && this.title != null;
+    }
+
+    public Movie(int id, String title, String overview, String releaseDate,
+                 String posterPath, String backdropPath, Double voteAverage) {
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
+        this.voteAverage = voteAverage;
     }
 }
