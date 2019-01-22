@@ -6,6 +6,11 @@ Activities:
       filtering by most popular or top rated movies
   * MovieDetailActivity.java - containinig the details (image, title, release date, vote avarage and synopsis)
       from the selected image in the previous activity
+      
+ Usage:
+  * In order to be able to run the app first create an account and get an API key from https://www.themoviedb.org/documentation/api
+  * Then create a 'gradle.properties' file in the root folder and set the API key to a variable called 'TMDB_ApiKey'
+      
 
 App Screenshots:
 
