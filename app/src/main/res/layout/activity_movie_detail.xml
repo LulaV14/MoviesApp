@@ -20,7 +20,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:scaleType="centerCrop"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/movie_backdrop_description" />
 
             <TextView
@@ -33,6 +34,16 @@
                 android:layout_margin="@dimen/movie_title_margin"
                 android:textColor="@android:color/white"
                 android:layout_alignBottom="@id/iv_backdrop_image"/>
+
+            <ImageView
+                android:id="@+id/iv_favorite_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/movie_favorite_margin"
+                android:src="@android:drawable/star_off"
+                android:contentDescription="@string/movie_favorite_description"/>
 
         </RelativeLayout>
 

@@ -1,5 +1,7 @@
 package com.example.android.popularmoviesapp;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 
@@ -7,21 +9,28 @@ import com.example.android.popularmoviesapp.API.TMDBController;
 import com.example.android.popularmoviesapp.API.TMDBInterface;
 import com.example.android.popularmoviesapp.Adapters.ReviewAdapter;
 import com.example.android.popularmoviesapp.Adapters.VideoAdapter;
+import com.example.android.popularmoviesapp.Database.AppDatabase;
+import com.example.android.popularmoviesapp.Database.FavoriteMovie;
+import com.example.android.popularmoviesapp.Helpers.AppExecutors;
 import com.example.android.popularmoviesapp.Helpers.GradientTransformation;
 import com.example.android.popularmoviesapp.Model.Movie;
 import com.example.android.popularmoviesapp.Model.Review;
 import com.example.android.popularmoviesapp.Model.ReviewsResponse;
 import com.example.android.popularmoviesapp.Model.Video;
 import com.example.android.popularmoviesapp.Model.VideosResponse;
+import com.example.android.popularmoviesapp.ViewModel.MovieDetailViewModel;
+import com.example.android.popularmoviesapp.ViewModel.MovieDetailViewModelFactory;
 import com.squareup.picasso.Picasso;
 
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -48,6 +57,10 @@ public class MovieDetailActivity extends AppCompatActivity
     private ReviewAdapter reviewAdapter;
     private int movieId;
 
+    private Movie movie;
+    private AppDatabase database;
+    private FavoriteMovie favorite;
+
     @BindView(R.id.iv_backdrop_image)
     ImageView iv_backdrop_image;
     @BindView(R.id.tv_movie_title)
@@ -64,12 +77,16 @@ public class MovieDetailActivity extends AppCompatActivity
     RecyclerView rv_videos;
     @BindView(R.id.rv_reviews)
     RecyclerView rv_reviews;
+    @BindView(R.id.iv_favorite_icon)
+    ImageView iv_favorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
+
+        database = AppDatabase.getInstance(getApplicationContext());
 
         // show back arrow on toolbar
         try {
@@ -82,7 +99,7 @@ public class MovieDetailActivity extends AppCompatActivity
         // get intent data
         Intent intent = getIntent();
         if (intent.hasExtra(MOVIE_INTENT_KEY)) {
-            Movie movie = intent.getParcelableExtra(MOVIE_INTENT_KEY);
+            movie = intent.getParcelableExtra(MOVIE_INTENT_KEY);
             if (movie == null) {
                 closeOnError();
                 Log.e(TAG, "No movie object serialized");
@@ -99,10 +116,27 @@ public class MovieDetailActivity extends AppCompatActivity
                 tv_title.setText(movie.getTitle());
                 tv_overview.setText(movie.getOverview());
                 Double vote_average = movie.getVoteAverage() / 2;
-                tv_vote_average.setText("(" + movie.getVoteAverage() + ")");
+                tv_vote_average.setText(movie.getVoteAverage() + "/10");
                 rb_vote_average.setRating(vote_average.floatValue());
                 tv_release_date.setText(movie.getReleaseDate());
                 movieId = movie.getId();
+
+                // set favorite
+                iv_favorite.setOnClickListener(favoriteListener);
+                MovieDetailViewModelFactory factory = new MovieDetailViewModelFactory(database, movieId);
+                final MovieDetailViewModel viewModel =
+                        ViewModelProviders.of(this, factory).get(MovieDetailViewModel.class);
+                viewModel.getFavorite().observe(this, new Observer<FavoriteMovie>() {
+                    @Override
+                    public void onChanged(@Nullable FavoriteMovie favoriteMovie) {
+                        favorite = favoriteMovie;
+                        if (favoriteMovie == null) {
+                            iv_favorite.setImageResource(android.R.drawable.star_off);
+                            return;
+                        }
+                        iv_favorite.setImageResource(android.R.drawable.star_on);
+                    }
+                });
             } catch(NullPointerException e) {
                 Log.e(TAG, e.getMessage());
             }
@@ -146,7 +180,11 @@ public class MovieDetailActivity extends AppCompatActivity
 
     private void closeOnError() {
         finish();
-        Toast.makeText(this, "Error while trying to view movie details. \nPlease try again.", Toast.LENGTH_LONG).show();
+        Toast.makeText(
+                this,
+                "Error while trying to view movie details. \nPlease try again.",
+                Toast.LENGTH_LONG
+        ).show();
     }
 
     @Override
@@ -224,7 +262,7 @@ public class MovieDetailActivity extends AppCompatActivity
                         Toast.LENGTH_LONG
                 ).show();
 
-                Log.e(TAG, "Error while trying to load moview reviews");
+                Log.e(TAG, "Error while trying to load movie reviews");
                 t.printStackTrace();
             }
         });
@@ -245,4 +283,45 @@ public class MovieDetailActivity extends AppCompatActivity
             }
         }
     }
+
+    private View.OnClickListener favoriteListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final FavoriteMovie favoriteMovie =
+                    new FavoriteMovie(
+                            movie.getId(),
+                            movie.getTitle(),
+                            movie.getOverview(),
+                            movie.getReleaseDate(),
+                            movie.getPosterPath(),
+                            movie.getBackdropPath(),
+                            movie.getVoteAverage()
+                    );
+            AppExecutors.getInstance().diskIO().execute(getUpdateDbRunnable(favoriteMovie));
+            AppExecutors.getInstance().mainThread().execute(updateUITextRunnable);
+        }
+    };
+
+    private Runnable getUpdateDbRunnable(FavoriteMovie favoriteMovie) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                if (favorite == null) {
+                    database.movieDao().insertFavorite(favoriteMovie);
+                } else {
+                    database.movieDao().deleteFavorite(favoriteMovie);
+                }
+            }
+        };
+    }
+
+    private Runnable updateUITextRunnable = new Runnable() {
+        @Override
+        public void run() {
+            String textMessage = favorite == null ?
+                    "favorite movie added!" :
+                    "favorite movie deleted!";
+            Toast.makeText(getApplicationContext(), textMessage, Toast.LENGTH_SHORT).show();
+        }
+    };
 }

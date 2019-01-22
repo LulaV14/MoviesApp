@@ -3,6 +3,7 @@
     <string name="app_name">Popular Movies App</string>
     <string name="filter_most_popular">Most Popular Movies</string>
     <string name="filter_top_rated">Top Rated Movies</string>
+    <string name="filter_favorites">Favorite Movies</string>
 
     <string name="movie_poster_description">Movie Poster</string>
     <!-- end MainActivity -->
@@ -11,11 +12,13 @@
     <!-- start filter_menu -->
     <string name="most_popular_title">Filter By Most Popular</string>
     <string name="top_rated_title">Filter By Top Rated</string>
+    <string name="favorite_filter_title">Filter By Favorite</string>
     <!-- end filter_menu -->
 
 
     <!-- start MovieDetailActivity -->
     <string name="movie_backdrop_description">Movie Backdrop</string>
+    <string name="movie_favorite_description">Movie Favorite</string>
     <string name="detail_release_date">Release Date:</string>
     <string name="detail_average_vote">Average Vote:</string>
     <string name="detail_overview">Overview:</string>
